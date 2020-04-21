@@ -12,6 +12,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 
+import { FormsModule } from '@angular/forms';
+
+// Servicios
+import { ServiceModule } from './services/service.module';
+
+
+
 
 @NgModule({
   declarations: [
@@ -19,13 +26,16 @@ import { RegisterComponent } from './login/register.component';
     LoginComponent,
     RegisterComponent
 
+
   ],
   imports: [
     BrowserModule,
     PagesModule,
+    FormsModule,
+    ServiceModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
