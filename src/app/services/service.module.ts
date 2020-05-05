@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 
+
 import {
   SidebarService,
   SharedService,
   SettingsService,
   UsuarioService,
+  SubirArchivoService,
   LoginGuardGuard
   } from './service.index';
 
@@ -21,6 +23,7 @@ import {
     SharedService,
     SettingsService,
     UsuarioService,
+    SubirArchivoService,
     LoginGuardGuard
   ],
   imports: [
