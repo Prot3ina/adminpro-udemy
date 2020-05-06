@@ -102,7 +102,7 @@ export class UsuarioService {
               .map( (resp: any) => {
 
                 Swal.fire({
-                  position: 'top-end',
+                  // position: 'top-end',
                   icon: 'success',
                   title: 'Usuario creado',
                   text: usuario.email,
@@ -120,12 +120,13 @@ export class UsuarioService {
     return this.http.put( url, usuario )
                 .map( (resp: any) => {
 
-                  // this.usuario = resp.usuario;
-                  let usuarioDB: Usuario = resp.usuario;
+                  if ( usuario._id === this.usuario._id) {
+                    let usuarioDB: Usuario = resp.usuario;
+                    this.guardarStorage( usuarioDB._id, this.token, usuarioDB );
 
-                  this.guardarStorage( usuarioDB._id, this.token, usuarioDB );
+                  }
+
                   Swal.fire({
-                    position: 'top-end',
                     icon: 'success',
                     title: 'Usuario actualizado',
                     text: usuario.nombre,
@@ -144,7 +145,6 @@ export class UsuarioService {
                   .then((resp: any) => {
                     this.usuario.img = resp.usuario.img;
                     Swal.fire({
-                      position: 'top-end',
                       icon: 'success',
                       title: 'Imagen actualizada',
                       text: this.usuario.nombre,
@@ -159,6 +159,37 @@ export class UsuarioService {
 
                   });
   }
+
+  cargarUsuarios( desde: number = 0 ) {
+
+    let url = URL_SERVICIOS + '/usuario?desde=' + desde;
+    return this.http.get( url );
+
+  }
+
+  buscarUsuarios( termino: string ) {
+
+    let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + termino;
+    return this.http.get( url )
+                   .map((resp: any) => resp.usuarios );
+
+  }
+
+  borrarUsuario(id: string) {
+    let url = URL_SERVICIOS + '/usuario/' + id;
+    url += '?token=' + this.token;
+    return this.http.delete( url )
+               .map( resp => {
+                Swal.fire(
+                  'Usuario Borrado',
+                  'El usuario a sido eliminado correctamente',
+                  'success'
+                );
+                return true;
+               });
+
+  }
+
 
 
 }
