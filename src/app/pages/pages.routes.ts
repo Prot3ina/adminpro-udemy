@@ -8,7 +8,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 
-import { LoginGuardGuard, AdminGuard } from '../services/service.index';
+import { LoginGuardGuard, AdminGuard, VerificaTokenGuard } from '../services/service.index';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
@@ -19,12 +19,12 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
 
 
 const pagesRoutes: Routes = [
-  {
-    path: '',
-    component: PagesComponent,
-    canActivate: [ LoginGuardGuard ],
-    children: [
-      { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard'} },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [ VerificaTokenGuard ],
+        data: { titulo: 'Dashboard'}
+      },
       { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress'} },
       { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Graficas'} },
       { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas'} },
@@ -45,9 +45,6 @@ const pagesRoutes: Routes = [
       { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Actualizar medico'} },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 
-    ]
-
-  }
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild( pagesRoutes);
